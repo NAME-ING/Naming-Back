@@ -18,3 +18,12 @@ class RegistrationView(views.APIView):
             serializer.save()
             return Response({'data': serializer.data})
         return Response({'error': serializer.errors})  # 피그마 보고 수정하기
+
+
+class LoginView(views.APIView):
+    def post(self, request):
+        serializer = UserLoginSerializer(data=request.data)
+
+        if serializer.is_valid():
+            return Response({"message": "로그인 성공", "data": serializer.data})
+        return Response({'message': '로그인 실패', 'error': serializer.errors})
