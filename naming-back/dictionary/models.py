@@ -12,7 +12,9 @@ class dictionary(models.Model):
     userId = models.ForeignKey(accounts, on_delete=models.CASCADE)
 
 class post(models.Model):
+    nickname = models.CharField(max_length=30, null=False, default="행인")
     consonant = models.CharField(max_length=10)
     contents = models.TextField()
-    likes = models.IntegerField(null=True)
+    like = models.PositiveBigIntegerField(null=True)
     dictionary = models.ForeignKey(dictionary, on_delete=models.CASCADE, related_name='post')
+    stack = models.PositiveBigIntegerField(null=True)
