@@ -3,7 +3,7 @@ from accounts.models import *
 
 class dictionary(models.Model):
     firstName = models.CharField(max_length=100, blank=True, default='')
-    color = models.CharField()
+    color = models.CharField(max_length=100)
     shadow = models.IntegerField()
     shadowColor = models.IntegerField()
     border = models.IntegerField()
