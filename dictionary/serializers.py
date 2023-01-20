@@ -12,12 +12,11 @@ class dictionarySerializer(serializers.ModelSerializer):
 
 class postSerializer(serializers.ModelSerializer):
     is_liked = serializers.BooleanField(default=False)
-    like = serializers.IntegerField(default=0)
-    stack = serializers.IntegerField(default=0)
+    like = serializers.IntegerField(default=0, read_only = True)
 
     class Meta:
         model = post
-        fields = ['id', 'consonant', 'contents', 'like', 'is_liked', 'stack']
+        fields = ['id', 'consonant', 'contents', 'like', 'is_liked']
 
 class dictionaryListSerializer(serializers.ModelSerializer):
     stacked = postSerializer(many = True, read_only = True)
@@ -36,8 +35,7 @@ class dictionaryPostSerializer(serializers.ModelSerializer):
         fields = ['id', 'post']
 
 class NickNameSerializer(serializers.ModelSerializer):
-    people = serializers.IntegerField(default=0)
 
     class Meta:
         model = post
-        fields = ['id', 'nickname', 'people']
+        fields = ['id', 'nickname']
