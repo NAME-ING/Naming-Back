@@ -3,27 +3,29 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 
 class UserManager(BaseUserManager):
+    def create_superuser(self, userId, firstName=None, email=None, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_active", True)
 
-    def create_user(self, userId, email, password):
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True.")
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
+
+        return self.create_user(userId, firstName, email, password, **extra_fields)
+
+    def create_user(self, userId, firstName, email, password, **extra_fields):
+        extra_fields.setdefault("is_staff", False)
+        extra_fields.setdefault("is_superuser", False)
+
         email = self.normalize_email(email)
 
         userId = self.model(userId)
         firstName = self.model(firstName)
-        userId.set_password(password)
+        password = userId.set_password(password)
         userId.save()
         return firstName
-
-    def create_superuser(self, userId, password, **extra_fields):
-
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_active', True)
-
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError(_('Superuser must have is_staff=True.'))
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError(_('Superuser must have is_superuser=True.'))
-        return self.create_user(userId, password, **extra_fields)
 
 
 class User(AbstractUser):
