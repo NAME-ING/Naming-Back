@@ -27,8 +27,10 @@ class SignUpView(views.APIView):
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
-            serializer.save()
-            return Response({'message': '회원가입 성공', 'data': serializer.data}, status=HTTP_201_CREATED)
+            #serializer.save()
+            firstName = serializer.data['firstName']
+            users = User.objects.filter(firstName=firstName)
+            return Response({'message': '회원가입 성공', 'data': serializer.data, 'number': len(users)}, status=HTTP_201_CREATED)
         return Response({'message': '회원가입 실패', 'data': serializer.errors}, status=HTTP_400_BAD_REQUEST)
 
 
