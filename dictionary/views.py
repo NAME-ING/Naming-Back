@@ -76,7 +76,6 @@ class postDeleteView(views.APIView):
 
 class postLikeView(views.APIView):
     serializer_class = postSerializer
-    permission_classes = [IsAuthenticated]
 
     def post(self, request, pk, post_pk):
         postmake = get_object_or_404(dictionary, pk=pk)
