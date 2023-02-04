@@ -21,7 +21,7 @@ class dictionaryMakeView(views.APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def post(self, request, format=None):
-        serializer = dictionarySerializer(data=request.data, partial=True)
+        serializer = dictionaryMakeSerializer(data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save(userId=request.user)
             return Response({'message': '사전 만들기 성공', 'data': serializer.data}, status=HTTP_201_CREATED)

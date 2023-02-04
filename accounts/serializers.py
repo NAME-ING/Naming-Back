@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
+from dictionary.models import dictionary
 from django.contrib.auth.hashers import make_password, check_password
 
 
@@ -34,6 +35,9 @@ class LoginSerializer(serializers.Serializer):
 
         if User.objects.filter(username=username).exists():
             user = User.objects.get(username=username)
+            userId = user.objects.get(userId)
+            find_dictionary = dictionary.objects.get(userId=userId)
+            dictionaryId = find_dictionary.objects.get(dictionaryId)
             if not user.check_password(password):
                 raise serializers.ValidationError('잘못된 비밀번호입니다.')
             else:
@@ -46,6 +50,7 @@ class LoginSerializer(serializers.Serializer):
                     'username': user.username,
                     'firstName': user.firstName,
                     'access_token': access,
+                    'dictionary': dictionaryId
                 }
 
                 return data
