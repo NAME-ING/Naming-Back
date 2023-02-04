@@ -2,10 +2,6 @@ from rest_framework import serializers
 from .models import *
 
 class dictionaryMakeSerializer(serializers.ModelSerializer):
-    firstName = serializers.SerializerMethodField()
-    def get_firstName(self, obj):
-        return obj.firstName
-
     class Meta:
         model = dictionary
         fields = ['id', 'userId', 'firstName', 'color', 'shadow', 'shadowColor', 'border']
