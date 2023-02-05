@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import User
-from dictionary.models import dictionary
+from .models import *
+from dictionary.models import *
 from django.contrib.auth.hashers import make_password, check_password
 
 
@@ -55,7 +55,3 @@ class LoginSerializer(serializers.Serializer):
         else:
             raise serializers.ValidationError('존재하지 않는 사용자입니다.')
 
-class dictionaryFindSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = dictionary
-        fields = ['id']
