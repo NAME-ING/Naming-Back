@@ -19,7 +19,6 @@ class postSerializer(serializers.ModelSerializer):
         model = post
         fields = ['id', 'consonant', 'contents', 'likes', 'is_liked']
 
-
 class dictionaryListSerializer(serializers.ModelSerializer):
     stacked = postSerializer(many = True, read_only = True)
     firstName = serializers.SerializerMethodField()
@@ -41,3 +40,8 @@ class NickNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = post
         fields = ['id', 'nickname']
+
+class dictionaryFindSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = dictionary
+        fields = ['id']

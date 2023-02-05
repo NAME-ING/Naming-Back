@@ -11,4 +11,5 @@ urlpatterns = [
     path('<int:pk>/post/<int:post_pk>/like', postLikeView.as_view()),
     path('<int:pk>/people/', NicknameListView.as_view()),
     path('search/', SearchView.as_view()),
+    path('id/<int:pk>/', dictionaryFindView.as_view())
 ]

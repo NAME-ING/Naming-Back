@@ -149,3 +149,12 @@ class SearchView(views.APIView):
         serializer = self.serializer_class(dictionarys, many=True)
 
         return Response({'message': '사전 검색 성공', 'data': serializer.data}, status=HTTP_200_OK)
+
+class dictionaryFindView(views.APIView):
+    serializer_class = dictionaryFindSerializer
+    def get(self, request, pk, format=None):
+        if dictionary.objects.filter(userId=pk).exists():
+            dictionaryFind = dictionary.objects.get(userId=pk)
+            serializer = self.serializer_class(dictionaryFind)
+            return Response({'message': '사전id 찾기 성공', 'data': serializer.data}, status = HTTP_200_OK)
+        return Response({'message': '사전id 없음'}, status = HTTP_200_OK)
