@@ -35,8 +35,6 @@ class LoginSerializer(serializers.Serializer):
 
         if User.objects.filter(username=username).exists():
             user = User.objects.get(username=username)
-            userId = user.objects.get(userId)
-
             if not user.check_password(password):
                 raise serializers.ValidationError('잘못된 비밀번호입니다.')
             else:
