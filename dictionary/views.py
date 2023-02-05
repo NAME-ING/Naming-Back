@@ -19,7 +19,6 @@ class dictionaryView(views.APIView):
 
 class dictionaryMakeView(views.APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
-
     def post(self, request, format=None):
         serializer = dictionaryMakeSerializer(data=request.data, partial=True)
         if serializer.is_valid():

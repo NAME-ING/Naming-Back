@@ -42,3 +42,12 @@ class LoginView(views.APIView):
         if serializer.is_valid():
             return Response({'message': "로그인 성공", 'data': serializer.validated_data}, status=HTTP_200_OK)
         return Response({'message': "로그인 실패", 'data': serializer.errors}, status=HTTP_400_BAD_REQUEST)
+
+class dictionaryFindView(views.APIView):
+    def get(self, request, pk, format=None):
+        if dictionary.objects.filter(userId=pk).exists():
+            dictionaryFind = dictionary.objects.filter(userId=pk)
+            serializer = dictionaryFindSerializer(dictionaryFind)
+            return Response({'message': '사전id 찾기 성공', 'data': serializer.data}, status = HTTP_200_OK)
+        else:
+            return Response({'message': '사전id 없음'}, status = HTTP_200_OK)
