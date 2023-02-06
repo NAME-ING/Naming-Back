@@ -11,6 +11,7 @@ class dictionary(models.Model):
     creators = models.TextField()
     postNumber = models.IntegerField(null=True)
     userId = models.ForeignKey(User, on_delete=models.CASCADE)
+    stacked = models.BigIntegerField(default=0, null=True)
 
 
 class post(models.Model):

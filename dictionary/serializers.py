@@ -20,7 +20,7 @@ class postSerializer(serializers.ModelSerializer):
         fields = ['id', 'consonant', 'contents', 'likes', 'is_liked']
 
 class dictionaryListSerializer(serializers.ModelSerializer):
-    stacked = postSerializer(many = True, read_only = True)
+    stacked = serializers.IntegerField(default=0, read_only = True)
     firstName = serializers.SerializerMethodField()
     def get_firstName(self, obj):
         return obj.firstName

@@ -55,6 +55,8 @@ class postListView(views.APIView):
 
         if serializer.is_valid():
             serializer.save(dictionary=postmake)
+            postmake.stacked += 1
+            postmake.save()
             return Response({'message': '정의 적기 성공', 'data': serializer.data}, status=HTTP_200_OK)
         return Response({'message': '정의 적기 실패', 'data': serializer.errors}, status=HTTP_400_BAD_REQUEST)
 
