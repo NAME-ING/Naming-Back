@@ -8,7 +8,7 @@ from django.contrib.auth.hashers import make_password, check_password
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'firstName', 'password']
+        fields = ['id', 'username', 'firstName', 'password', 'userNumber']
 
     def create(self, validate_data):
         hashed_password = make_password('password')
@@ -16,6 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
             username=validate_data['username'],
             firstName=validate_data['firstName'],
             password=make_password(validate_data['password']),
+            userNumber = validate_data['userNumber'],
         )
         # user.make_password(validate_data['password'])
         token = RefreshToken.for_user(user)
@@ -52,4 +53,3 @@ class LoginSerializer(serializers.Serializer):
                 return data
         else:
             raise serializers.ValidationError('존재하지 않는 사용자입니다.')
-

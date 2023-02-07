@@ -25,12 +25,12 @@ class SignUpView(views.APIView):
 
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
-
         if serializer.is_valid():
-            serializer.save()
-            firstName = serializer.data['firstName']
+            firstName = serializer.validated_data['firstName']
             users = User.objects.filter(firstName=firstName)
-            return Response({'message': '회원가입 성공', 'data': serializer.data, 'number': len(users)}, status=HTTP_201_CREATED)
+            number = len(users)
+            serializer.save(userNumber=number)
+            return Response({'message': '회원가입 성공', 'data': serializer.data}, status=HTTP_201_CREATED)
         return Response({'message': '회원가입 실패', 'data': serializer.errors}, status=HTTP_400_BAD_REQUEST)
 
 
@@ -44,3 +44,9 @@ class LoginView(views.APIView):
         return Response({'message': "로그인 실패", 'data': serializer.errors}, status=HTTP_400_BAD_REQUEST)
 
 
+class UserNumberView(views.APIView):
+    serializer_class = UserSerializer
+    def get(self, request, pk):
+        UserNumber = User.objects.get(id = pk)
+        serializer = self.serializer_class(UserNumber)
+        return Response({'message': '몇번째 유저 찾기 성공', 'data': serializer.data}, status = HTTP_200_OK)
