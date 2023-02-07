@@ -7,9 +7,10 @@ class dictionaryMakeSerializer(serializers.ModelSerializer):
         fields = ['id', 'userId', 'firstName', 'color', 'shadow', 'shadowColor', 'border']
 
 class dictionarySerializer(serializers.ModelSerializer):
+    stacked = serializers.IntegerField(default=0, read_only = True)
     class Meta:
         model = dictionary
-        fields = ['id', 'userId', 'firstName', 'color', 'shadow', 'shadowColor', 'border']
+        fields = ['id', 'userId', 'firstName', 'color', 'shadow', 'shadowColor', 'border', 'stacked']
 
 class postSerializer(serializers.ModelSerializer):
     is_liked = serializers.BooleanField(default=False)
